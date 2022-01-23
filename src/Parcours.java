@@ -4,25 +4,29 @@ import java.util.ArrayList;
 
 public class Parcours  extends Thread {
     public ArrayList<Point> points = new ArrayList<>();
-    public Etat etat;
     public int lastpoint = 0;
-    public final int AVANCE = 5;
-    public final int PENTEMAX;  //doit dépendre d'AVANCE et de GRAVITE
-    
-    public Parcours(Etat etat){
-        this.etat = etat;
-        this.PENTEMAX = AVANCE/etat.GRAVITE;
-        
-        int ly;
 
+    public final float PENTEMAX = (float) Etat.AVANCE/Etat.GRAVITE;;  //Pente descendante
+    public final float PENTEMIN = (float) Etat.AVANCE/(-5* Etat.SAUT);
+    public final double xmax = Etat.SIZE*PENTEMAX;   //borne supérieure pour l'écart en x entre 2 points
+
+    public Parcours(){
         do{
-        	int ry = (int) (Math.random()*(etat.SIZE));
-        	lastpoint += (int) (50 + Math.random()*(200 - 50));
+            //on commence par générer une valeur en y contenue dans l'écran
+        	int ry = (int) (Math.random()*(Etat.SIZE));
+            double minx;
+
+            if(ry > Etat.HAUTEUR) { //cas d'une descente
+                minx = (ry - Etat.HAUTEUR)*PENTEMAX;
+            }else{ //cas d'une montée
+                minx = (ry - Etat.HAUTEUR)*PENTEMIN;
+            }
+            lastpoint += (int) (minx + Math.random()*(xmax - minx)); //TODO
+
             //gérer la pente max (plus tard)
             points.add(new Point(lastpoint, ry)); 
-        }while(lastpoint < (etat.SIZE));
+        }while(lastpoint < Etat.SIZE);
         System.out.println(points);
-        
     }
 
     /*
@@ -50,17 +54,26 @@ public class Parcours  extends Thread {
     public void majParcours() {
     	ArrayList<Point> res = new ArrayList<Point>();
     	for(Point p : this.points) {
-    		p.x -= AVANCE;
-    		if(p.x >= -200 /*l'ecart max avec les voisins, il faudra surement le modififer*/) {
+    		p.x -= Etat.AVANCE;
+    		if(p.x >= -Etat.SIZE*PENTEMAX) {
     			res.add(p);
     		}
     	}
-    	this.lastpoint -= AVANCE;
+    	this.lastpoint -= Etat.AVANCE;
     	
-    	if(points.get(points.size()-1).x < etat.SIZE) {
-    		lastpoint += (int) (50 + Math.random()*(200 - 50));
-            //gérer la pente max (plus tard)
-            res.add(new Point(lastpoint, (int) (Math.random() * (etat.SIZE))));
+    	if(points.get(points.size()-1).x < Etat.SIZE) {
+            //on commence par générer une valeur en y contenue dans l'écran
+            int ry = (int) (Math.random()*(Etat.SIZE));
+            double minx;
+
+            if(ry > Etat.HAUTEUR) { //cas d'une descente
+                minx = (ry - Etat.HAUTEUR)*PENTEMAX;
+            }else{ //cas d'une montée
+                minx = (ry - Etat.HAUTEUR)*PENTEMIN;
+            }
+            lastpoint += (int) (minx + Math.random()*(xmax - minx)); //TODO
+
+            res.add(new Point(lastpoint, ry));
     	}
     	this.points = res;
     }

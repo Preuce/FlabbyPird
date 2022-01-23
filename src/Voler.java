@@ -10,7 +10,7 @@ public class Voler extends Thread{
     @Override
     public void run(){
         while(true){
-        	if(this.etat.getHauteur() < this.etat.SIZE - etat.TAILLEIMAGE) {
+        	if(this.etat.getHauteur() < Etat.SIZE - Etat.TAILLEIMAGE) {
         		etat.moveDown();
         	}
         	affichage.repaint();

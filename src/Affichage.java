@@ -8,17 +8,15 @@ import javax.swing.JPanel;
 
 public class Affichage extends JPanel{
 	public Parcours parcours;
-	public Etat etat; //contient les données du jeu
 
-	public Affichage(Etat etat, Parcours parcours) {
-		setPreferredSize(new Dimension(etat.SIZE, etat.SIZE));
+	public Affichage(Parcours parcours) {
+		setPreferredSize(new Dimension(Etat.SIZE, Etat.SIZE));
 		this.parcours = parcours;
-		this.etat = etat;
+
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		// TODO ICI
 		//super.paint(g);
 		//alternativement on peut mettre drawOval ou fillOval
 		BufferedImage im = null; //buffer
@@ -28,12 +26,14 @@ public class Affichage extends JPanel{
 	    	   System.out.println("Fichier manquant"); //absence de l'image
 	       }
 		super.paintComponent(g); //nécessaire pour update l'affichage
-	    g.drawImage(im, 100 /*l'abscisse*/, etat.HAUTEUR, etat.TAILLEIMAGE, etat.TAILLEIMAGE, this); //dessin de l'image
+		System.out.println(Etat.HAUTEUR);
+	    g.drawImage(im, 100 /*l'abscisse*/, Etat.HAUTEUR, Etat.TAILLEIMAGE, Etat.TAILLEIMAGE, this); //dessin de l'image
 	    
 		ArrayList<Point> l = parcours.points;
 		
-		for(int i = 0; i < l.size()-1; i++){ //pb here
+		for(int i = 0; i < l.size()-1; i++){
 			g.drawLine(l.get(i).x, l.get(i).y, l.get(i+1).x, l.get(i+1).y);
+			//System.out.println((float) (l.get(i+1).y - l.get(i).y)/(l.get(i+1).x-l.get(i).x));
 		}
 	}
 }

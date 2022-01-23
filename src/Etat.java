@@ -1,23 +1,22 @@
 public class Etat { //les variables/données utiles
-    public Affichage affichage;
-    
 
-    public final int SAUT = 60; //taille saut
-    public final int GRAVITE = 3; //constante de chute
-    public static int HAUTEUR = 200; //ordonnée flabby
+    public static final int AVANCE = 10; //constante de vitesse d'avancement
 
-    public final int TAILLEIMAGE = 100;
-    public final int SIZE = 1000; //taille de l'écran
+    public static final int SAUT = 60; //taille saut
+    public static final int GRAVITE = 5; //constante de chute
+    public static int HAUTEUR = 200; //ordonnée flabby de départ
+
+    public static final int TAILLEIMAGE = 100; //taille de flabby
+    public static final int SIZE = 1000; //taille de l'écran
 
     public Etat(){
-    	
     }
 
     /**jump
      * met à jour la hauteur de flabby
      */
     public void jump(){
-    	if(this.HAUTEUR > -SAUT) {
+    	if(HAUTEUR > -SAUT) {
     		HAUTEUR -= SAUT;
     	}
     }
@@ -30,6 +29,6 @@ public class Etat { //les variables/données utiles
     }
     
     public int getHauteur() {
-    	return this.HAUTEUR;
+    	return HAUTEUR;
     }
 }
