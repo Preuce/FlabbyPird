@@ -3,7 +3,7 @@ import javax.swing.JFrame;
 public class Main {
 
 	public static Parcours parcours = new Parcours();
-	public static Affichage affichage = new Affichage(parcours);
+	public static Affichage affichage = new Affichage(/*parcours*/);
 	public static Etat etat = new Etat();
 	public static Control control = new Control(etat, affichage);
 	public static Voler voler = new Voler(etat, affichage);

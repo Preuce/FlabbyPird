@@ -3,17 +3,17 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Parcours  extends Thread {
-    public ArrayList<Point> points = new ArrayList<>();
+    public static ArrayList<Point> points = new ArrayList<>();
     public int lastpoint = 0;
 
-    public final float PENTEMAX = (float) Etat.AVANCE/Etat.GRAVITE;;  //Pente descendante
-    public final float PENTEMIN = (float) Etat.AVANCE/(-5* Etat.SAUT);
+    public final float PENTEMAX = Etat.AVANCE/(float)Etat.GRAVITE;  //Pente descendante
+    public final float PENTEMIN = Etat.AVANCE/(float)(-5*10*Etat.SAUT); //pente ascendante, valeurs arbitraires
     public final double xmax = Etat.SIZE*PENTEMAX;   //borne supérieure pour l'écart en x entre 2 points
 
     public Parcours(){
         do{
             //on commence par générer une valeur en y contenue dans l'écran
-        	int ry = (int) (Math.random()*(Etat.SIZE));
+        	int ry = (int) (100 + Math.random()*(Etat.SIZE/2 - 100));
             double minx;
 
             if(ry > Etat.HAUTEUR) { //cas d'une descente
@@ -26,21 +26,13 @@ public class Parcours  extends Thread {
             //gérer la pente max (plus tard)
             points.add(new Point(lastpoint, ry)); 
         }while(lastpoint < Etat.SIZE);
-        System.out.println(points);
     }
 
     /*
      * Renvoie un tableau des points encore dans l'image
      */
     public ArrayList<Point> getPoints(){
-        ArrayList<Point> res = new ArrayList<>(); //résultat
-        for (Point point : this.points) { //parcours des points
-            int absolu = point.x - lastpoint; //test si le point est dans l'écran
-            if (absolu >= 0) {
-                res.add(point);
-            }
-        }
-        return res;
+        return points;
     }
 
     public int getScore(){
@@ -53,7 +45,7 @@ public class Parcours  extends Thread {
     
     public void majParcours() {
     	ArrayList<Point> res = new ArrayList<Point>();
-    	for(Point p : this.points) {
+    	for(Point p : points) {
     		p.x -= Etat.AVANCE;
     		if(p.x >= -Etat.SIZE*PENTEMAX) {
     			res.add(p);
@@ -63,7 +55,7 @@ public class Parcours  extends Thread {
     	
     	if(points.get(points.size()-1).x < Etat.SIZE) {
             //on commence par générer une valeur en y contenue dans l'écran
-            int ry = (int) (Math.random()*(Etat.SIZE));
+            int ry = (int) (Math.random()*Etat.SIZE);
             double minx;
 
             if(ry > Etat.HAUTEUR) { //cas d'une descente

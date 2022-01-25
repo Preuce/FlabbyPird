@@ -7,11 +7,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Affichage extends JPanel{
-	public Parcours parcours;
+	//public Parcours parcours;
 
-	public Affichage(Parcours parcours) {
+	public Affichage(/*Parcours parcours*/) {
 		setPreferredSize(new Dimension(Etat.SIZE, Etat.SIZE));
-		this.parcours = parcours;
+		//this.parcours = parcours;
 
 	}
 	
@@ -25,15 +25,18 @@ public class Affichage extends JPanel{
 	       } catch (IOException ex) {
 	    	   System.out.println("Fichier manquant"); //absence de l'image
 	       }
+		//System.out.println(Etat.HAUTEUR);
 		super.paintComponent(g); //nécessaire pour update l'affichage
-		System.out.println(Etat.HAUTEUR);
-	    g.drawImage(im, 100 /*l'abscisse*/, Etat.HAUTEUR, Etat.TAILLEIMAGE, Etat.TAILLEIMAGE, this); //dessin de l'image
-	    
-		ArrayList<Point> l = parcours.points;
+	    g.drawImage(im, Etat.ABSCISSE, Etat.HAUTEUR, Etat.TAILLEIMAGE, Etat.TAILLEIMAGE, this); //dessin de l'image
+	    g.drawString(String.valueOf(Etat.score), 10, 10);
+		ArrayList<Point> l = Parcours.points;
 		
 		for(int i = 0; i < l.size()-1; i++){
+			g.setColor(Color.BLACK);
 			g.drawLine(l.get(i).x, l.get(i).y, l.get(i+1).x, l.get(i+1).y);
-			//System.out.println((float) (l.get(i+1).y - l.get(i).y)/(l.get(i+1).x-l.get(i).x));
+			g.setColor(Color.RED);
+			g.drawLine(l.get(i).x, l.get(i).y-Etat.TOLERANCE, l.get(i+1).x, l.get(i+1).y-Etat.TOLERANCE);
+			g.drawLine(l.get(i).x, l.get(i).y+Etat.TOLERANCE, l.get(i+1).x, l.get(i+1).y+Etat.TOLERANCE);
 		}
 	}
 }

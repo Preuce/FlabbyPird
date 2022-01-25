@@ -21,6 +21,9 @@ public class Control extends JPanel implements MouseListener { //les action alis
     public void mouseClicked(MouseEvent e) {
         //Action on-click
     	this.etat.jump();
+        if(!etat.testPerdu()) {
+            Etat.score++;
+        }
         affichage.repaint(); //on peut définir la zone à update pour de meilleurs perf, peut être le faire un peu plus tard
     	
     }

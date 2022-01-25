@@ -13,6 +13,9 @@ public class Voler extends Thread{
         	if(this.etat.getHauteur() < Etat.SIZE - Etat.TAILLEIMAGE) {
         		etat.moveDown();
         	}
+            if(!etat.testPerdu()) {
+                Etat.score++;
+            }
         	affichage.repaint();
             try {
                 Thread.sleep(30);
