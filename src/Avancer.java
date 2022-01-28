@@ -5,6 +5,10 @@ public class Avancer extends Thread{
         this.parcours = parcours;
     }
 
+    /**
+     * run
+     * Thread contrôlant l'avancer du parcours
+     */
     @Override
     public void run(){
         while(true) {

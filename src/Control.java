@@ -7,13 +7,20 @@ public class Control extends JPanel implements MouseListener { //les action alis
     public Etat etat; //contient les données du jeu
     public Affichage affichage; //affichage à mettre à jour
 
+    /**
+     * Control
+     * Constructeur de Control
+     * @param etat
+     * @param affichage
+     */
     public Control(Etat etat, Affichage affichage){
         this.etat = etat;
         this.affichage = affichage;
         affichage.addMouseListener(this);
     }
 
-    /**mouseClicked
+    /**
+     * mouseClicked
      * Actions à réaliser lors d'un clic souris
      * @param e un clic souris
      */
@@ -21,9 +28,7 @@ public class Control extends JPanel implements MouseListener { //les action alis
     public void mouseClicked(MouseEvent e) {
         //Action on-click
     	this.etat.jump();
-        if(!etat.testPerdu()) {
-            Etat.score++;
-        }
+
         affichage.repaint(); //on peut définir la zone à update pour de meilleurs perf, peut être le faire un peu plus tard
     	
     }
